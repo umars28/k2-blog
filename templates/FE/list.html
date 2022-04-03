@@ -1,0 +1,162 @@
+{% extends 'FE/template/base.html' %}
+
+{% block title %}
+    List
+{% endblock %}
+
+
+{% block content %}
+    <!-- banner area start -->
+    <div class="banner-area banner-inner-1 bg-black" id="banner">
+        <!-- banner area start -->
+        <div class="banner-inner pt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="thumb after-left-top">
+                            <img src="{{ url_for('static', filename='img/banner/1.png') }}" alt="img">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 align-self-center">
+                        <div class="banner-details mt-4 mt-lg-0">
+                            <div class="post-meta-single">
+                                <ul>
+                                    <li><a class="tag-base tag-blue" href="#">Tech</a></li>
+                                    <li class="date"><i class="fa fa-clock-o"></i>08.22.2020</li>
+                                </ul>
+                            </div>
+                            <h2>ReZoom outage left some people locked out.</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                            <a class="btn btn-blue" href="#">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- banner area end -->
+    </div>
+    <!-- banner area end -->
+
+    
+
+    <div class="pd-top-80 pd-bottom-50" id="grid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-post-wrap style-overlay">
+                        <div class="thumb">
+                            <img src="{{ url_for('static', filename='img/post/15.png') }}" alt="img">
+                            <a class="tag-base tag-purple" href="#">Tech</a>
+                        </div>
+                        <div class="details">
+                            <div class="post-meta-single">
+                                <p><i class="fa fa-clock-o"></i>08.22.2020</p>
+                            </div>
+                            <h6 class="title"><a href="#">Why Are the Offspring of Older </a></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-post-wrap style-overlay">
+                        <div class="thumb">
+                            <img src="{{ url_for('static', filename='img/post/16.png') }}" alt="img">
+                            <a class="tag-base tag-green" href="#">Tech</a>
+                        </div>
+                        <div class="details">
+                            <div class="post-meta-single">
+                                <p><i class="fa fa-clock-o"></i>08.22.2020</p>
+                            </div>
+                            <h6 class="title"><a href="#">People Who Eat a Late Dinner May</a></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-post-wrap style-overlay">
+                        <div class="thumb">
+                            <img src="{{ url_for('static', filename='img/post/17.png') }}" alt="img">
+                            <a class="tag-base tag-red" href="#">Tech</a>
+                        </div>
+                        <div class="details">
+                            <div class="post-meta-single">
+                                <p><i class="fa fa-clock-o"></i>08.22.2020</p>
+                            </div>
+                            <h6 class="title"><a href="#">Kids eat more calories in </a></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-post-wrap style-overlay">
+                        <div class="thumb">
+                            <img src="{{ url_for('static', filename='img/post/18.png') }}" alt="img">
+                            <a class="tag-base tag-purple" href="#">Tech</a>
+                        </div>
+                        <div class="details">
+                            <div class="post-meta-single">
+                                <p><i class="fa fa-clock-o"></i>08.22.2020</p>
+                            </div>
+                            <h6 class="title"><a href="#">The FAA will test drone </a></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-post-wrap style-overlay">
+                        <div class="thumb">
+                            <img src="{{ url_for('static', filename='img/post/19.png') }}" alt="img">
+                            <a class="tag-base tag-red" href="#">Tech</a>
+                        </div>
+                        <div class="details">
+                            <div class="post-meta-single">
+                                <p><i class="fa fa-clock-o"></i>08.22.2020</p>
+                            </div>
+                            <h6 class="title"><a href="#">Lifting Weights Makes Your Nervous</a></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-post-wrap style-overlay">
+                        <div class="thumb">
+                            <img src="{{ url_for('static', filename='img/post/20.png') }}" alt="img">
+                            <a class="tag-base tag-blue" href="#">Tech</a>
+                        </div>
+                        <div class="details">
+                            <div class="post-meta-single">
+                                <p><i class="fa fa-clock-o"></i>08.22.2020</p>
+                            </div>
+                            <h6 class="title"><a href="#">New, Remote Weight-Loss Method </a></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-post-wrap style-overlay">
+                        <div class="thumb">
+                            <img src="{{ url_for('static', filename='img/post/21.png') }}" alt="img">
+                            <a class="tag-base tag-light-green" href="#">Tech</a>
+                        </div>
+                        <div class="details">
+                            <div class="post-meta-single">
+                                <p><i class="fa fa-clock-o"></i>08.22.2020</p>
+                            </div>
+                            <h6 class="title"><a href="#">Social Connection Boosts Fitness App </a></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-post-wrap style-overlay">
+                        <div class="thumb">
+                            <img src="{{ url_for('static', filename='img/post/22.png') }}" alt="img">
+                            <a class="tag-base tag-blue" href="#">Tech</a>
+                        </div>
+                        <div class="details">
+                            <div class="post-meta-single">
+                                <p><i class="fa fa-clock-o"></i>08.22.2020</p>
+                            </div>
+                            <h6 class="title"><a href="#">Internet For Things - New results </a></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+{% endblock %}
+
+   
