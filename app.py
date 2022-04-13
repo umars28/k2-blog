@@ -146,7 +146,7 @@ def homepage():
 
     per_page = 5
     
-    datas = Articles.objects().paginate(page, per_page).items
+    datas = Articles.objects().order_by('-id').paginate(page, per_page).items
 
     datacount = len(Articles.objects())
     page = request.args.get(get_page_parameter(), type=int, default=1)
