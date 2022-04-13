@@ -54,7 +54,7 @@
                             <td>{{ article.title }}</td>
                             <td>{{ article.category }}</td>
                             <td>{{ article.tag }}</td>
-                            <td>{{ article.description }}</td>
+                            <td>{{ article.description | truncate(40) }}</td>
                             <td>{{ article.writer }}</td>
                             <td>{{ article.published_date }}</td>
                             <td>{{ article.status }}</td>

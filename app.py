@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask_paginate import Pagination, get_page_parameter
 from flask_bootstrap import Bootstrap4
 from pymongo import MongoClient
 from flask_pymongo import PyMongo
@@ -132,27 +133,67 @@ def logout():
         return redirect(url_for('login'))
     else:
         return redirect(url_for('login'))
-      
 
 @app.route('/')
+@app.route('/index')
 def homepage():
-    data = Articles.objects(id='6255b21cc839d7184a0ad22b').first()
-    form = ArticleForm(obj = data)
+    try:
+        page = request.args.get('page')
+        page = int(page)
+    except:
+        page = 1
 
-    articles_most_read = dbs.articles.find()
+    per_page = 5
+    
+    datas = Articles.objects().paginate(page, per_page).items
 
-    return render_template('FE/index.html', form=form, articles=articles_most_read)
+    datacount = len(Articles.objects())
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = Pagination(page=page, per_page=per_page, total=datacount, record_name='data2',format_total=True,format_number=True,css_framework='bootstrap4')
+
+    filterdict = {'status' : 'ACTIVE'}
+    data = dbs.articles.find_one(filterdict, sort=[('_id', -1)])
+
+    categories = dbs.articles.find({"status": "ACTIVE"}).distinct("category")
+    tags = dbs.articles.find({"status": "ACTIVE"}).distinct("tag")
+
+    #categories = dbs.articles.find({"status": "ACTIVE"}).distinct("category")
+    
+
+    return render_template('FE/index.html', form=data, datas=datas, categories=categories, tags=tags, pagination=pagination)
 
 @app.route('/detail/<title>')
 def detail(title):
     data = Articles.objects(title=title).first()
-    
     form = ArticleForm(obj = data)
+    
     return render_template('FE/detail.html', form=form)
 
-@app.route('/list')
-def list():
-    return render_template('FE/list.html')   
+@app.route('/list/<data>/<type>')
+def list(data, type):
+    try:
+        page = request.args.get('page')
+        page = int(page)
+    except:
+        page = 1
+
+    per_page = 5
+    if type == 'category':
+        articles = Articles.objects(category=data).paginate(page, per_page).items
+        datacount = len(Articles.objects(category=data))
+    elif type == 'tags':
+        articles = Articles.objects(tag=data).paginate(page, per_page).items
+        datacount = len(Articles.objects(tag=data))
+    else:
+        articles = Articles.objects(category=data).paginate(page, per_page).items
+        datacount = len(Articles.objects(category=data))
+
+    var_dump(datacount)
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = Pagination(page=page, per_page=per_page, total=datacount, record_name='data',format_total=True,format_number=True,css_framework='bootstrap4')
+
+    
+    return render_template('FE/list.html', articles=articles, pagination=pagination)   
 
 @app.route('/admin/dashboard')
 def adminDashboard():

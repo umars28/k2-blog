@@ -14,20 +14,20 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="thumb after-left-top">
-                            <img src="{{ url_for('static', filename='image_upload/'+form.banner.data) }}" alt="{{ form.banner.data }}">
+                            <img src="{{ url_for('static', filename='image_upload/'+form.banner) }}" alt="{{ form.banner }}">
                         </div>
                     </div>
                     <div class="col-lg-6 align-self-center">
                         <div class="banner-details mt-4 mt-lg-0">
                             <div class="post-meta-single">
                                 <ul>
-                                    <li><a class="tag-base tag-blue" href="#">{{ form.category.data }}</a></li>
-                                    <li class="date"><i class="fa fa-clock-o"></i>{{ form.published_date.data }}</li>
+                                    <li><a class="tag-base tag-blue" href="#">{{ form.category }}</a></li>
+                                    <li class="date"><i class="fa fa-clock-o"></i>{{ form.published_date }}</li>
                                 </ul>
                             </div>
-                            <h2>{{ form.title.data }}</h2>
-                            <p>{{ form.description.data }}</p>
-                            <a class="btn btn-blue" href="{{ url_for('detail', title=form.title.data) }}">Read More</a>
+                            <h2>{{ form.title }}</h2>
+                            <p>{{ form.description | truncate(40) }}</p>
+                            <a class="btn btn-blue" href="{{ url_for('detail', title=form.title) }}">Read More</a>
                         </div>
                     </div>
                 </div>
@@ -41,23 +41,33 @@
     <div class="post-area pd-top-75 pd-bottom-50" id="trending">
         <div class="container">
             <div class="row">
-                {% for article in articles %}
+                {% for dt in datas %}
                     <div class="col-md-4">
                         <div class="single-post-wrap style-overlay">
                             <div class="thumb">
-                                <img src="{{ url_for('static', filename='image_upload/'+article.banner) }}" alt="{{ article.banner }}">
-                                <a class="tag-base tag-purple" href="#">{{ article.category }}</a>
+                                <img src="{{ url_for('static', filename='image_upload/'+dt.banner) }}" alt="{{ dt.banner }}" height="350">
+                                <a class="tag-base tag-purple" href="#">{{ dt.category }}</a>
                             </div>
                             <div class="details">
                                 <div class="post-meta-single">
-                                    <p><i class="fa fa-clock-o"></i>{{ article.published_date }}</p>
+                                    <p><i class="fa fa-clock-o"></i>{{ dt.published_date }}</p>
                                 </div>
-                                <h6 class="title"><a href="{{ url_for('detail', title=article.title) }}">{{ article.title }}</a></h6>
+                                <h6 class="title"><a href="{{ url_for('detail', title=dt.title) }}">{{ dt.title }}</a></h6>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
+            <table width="100%">
+                <tr>
+                    <td>
+                        {{ pagination.info }}
+                    </td>
+                    <td>
+                        {{ pagination.links }}
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -66,43 +76,37 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="section-title">
-                        <h6 class="title">Join With Us</h6>
+                        <h6 class="title">Category</h6>
                     </div>
                     <div class="social-area-list mb-4">
                         <ul>
-                            <li><a class="facebook" href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span><span>Like</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="twitter" href="#"><i class="fa fa-twitter social-icon"></i><span>12,600</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="youtube" href="#"><i class="fa fa-youtube-play social-icon"></i><span>1,300</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="instagram" href="#"><i class="fa fa-instagram social-icon"></i><span>52,400</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="google-plus" href="#"><i class="fa fa-google social-icon"></i><span>19,101</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
+                            {% for category in categories %}
+                                <li><a href="{{ url_for('list', data=category, type='category') }}"><i class="fa fa-facebook social-icon"></i><span>{{ category }}</span></a></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="section-title">
-                        <h6 class="title">Join With Us</h6>
+                        <h6 class="title">Tag</h6>
                     </div>
                     <div class="social-area-list mb-4">
                         <ul>
-                            <li><a class="facebook" href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span><span>Like</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="twitter" href="#"><i class="fa fa-twitter social-icon"></i><span>12,600</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="youtube" href="#"><i class="fa fa-youtube-play social-icon"></i><span>1,300</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="instagram" href="#"><i class="fa fa-instagram social-icon"></i><span>52,400</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="google-plus" href="#"><i class="fa fa-google social-icon"></i><span>19,101</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
+                            {% for tag in tags %}
+                            <li><a href="{{ url_for('list', data=tag, type='tags') }}"><i class="fa fa-facebook social-icon"></i><span>{{ tag }}</span></a></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="section-title">
-                        <h6 class="title">Join With Us</h6>
+                        <h6 class="title">Month - Year</h6>
                     </div>
                     <div class="social-area-list mb-4">
                         <ul>
-                            <li><a class="facebook" href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span><span>Like</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="twitter" href="#"><i class="fa fa-twitter social-icon"></i><span>12,600</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="youtube" href="#"><i class="fa fa-youtube-play social-icon"></i><span>1,300</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="instagram" href="#"><i class="fa fa-instagram social-icon"></i><span>52,400</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
-                            <li><a class="google-plus" href="#"><i class="fa fa-google social-icon"></i><span>19,101</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span></a></li>
+                            <li><a href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span></a></li>
+                            <li><a href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span></a></li>
                         </ul>
                     </div>
                 </div>
