@@ -119,9 +119,9 @@
                     </div>
                     <div class="social-area-list mb-4">
                         <ul>
-                            <li><a href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span></a></li>
-                            <li><a href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span></a></li>
-                            <li><a href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span></a></li>
+                            {% for date in publish_dates %}
+                            <li><a href="{{ url_for('list', data=date, type='years') }}"><i class="fa fa-facebook social-icon"></i><span>{{ date|strftime }}</span></a></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>

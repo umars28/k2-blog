@@ -8,9 +8,12 @@ from flask_mongoengine.wtf import model_form
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 from markupsafe import escape
 from var_dump import var_dump
+from flask_babel import Babel
 #from flask_bcrypt import Bcrypt
 import bcrypt
+from datetime import datetime
 import os
+import dateutil.parser
 
 client = MongoClient("mongodb://127.0.0.1:27017") #host uri
 dbs = client.blog    #Select the database
@@ -20,6 +23,7 @@ dbs = client.blog    #Select the database
 db = MongoEngine()
 app = Flask(__name__)
 bootstrap = Bootstrap4(app)
+babel = Babel(app)
 app.config['MONGO_DBNAME'] = 'blog'
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false'
 
@@ -68,6 +72,21 @@ class Articles(db.Document):
     read_count = db.StringField()
 
 ArticleForm = model_form(Articles)
+
+@app.template_filter()
+def format_datetime(value, format='medium'):
+    if format == 'full':
+        format="EEEE, d. MMMM y 'at' HH:mm"
+    elif format == 'medium':
+        format="EE dd.MM.y HH:mm"
+    return babel.dates.format_datetime(value, format)
+    
+@app.template_filter('strftime')
+def _jinja2_filter_datetime(date, fmt=None):
+    date = dateutil.parser.parse(date)
+    native = date.replace(tzinfo=None)
+    format='%b, %Y'
+    return native.strftime(format) 
 
 @app.route('/auth/login', methods =['GET', 'POST'])
 def login():
@@ -162,6 +181,7 @@ def homepage():
     ])
 
     most_read_article = dbs.articles.aggregate([{"$sort":{"read_count":-1}}, {"$limit":5}])
+    publish_dates = dbs.articles.find({"status": "ACTIVE"}).distinct("published_date")
 
 
     return render_template('FE/index.html', 
@@ -170,7 +190,8 @@ def homepage():
         categories=categories, 
         tags=most_tag, 
         pagination=pagination, 
-        most_read=most_read_article
+        most_read=most_read_article,
+        publish_dates=publish_dates
         )
 
 @app.route('/detail/<title>')
@@ -204,8 +225,8 @@ def list(data, type):
         articles = Articles.objects(tag=data).paginate(page, per_page).items
         datacount = len(Articles.objects(tag=data))
     else:
-        articles = Articles.objects(category=data).paginate(page, per_page).items
-        datacount = len(Articles.objects(category=data))
+        articles = Articles.objects(published_date=data).paginate(page, per_page).items
+        datacount = len(Articles.objects(published_date=data))
 
     var_dump(datacount)
     page = request.args.get(get_page_parameter(), type=int, default=1)
