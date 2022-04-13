@@ -59,8 +59,10 @@
                             <td>{{ article.published_date }}</td>
                             <td>{{ article.status }}</td>
                             <td>
-                              <a href="{{ url_for('adminArticleDelete', id=article._id) }}" onclick="return confirm(' you want to delete?');" class="btn btn-outline-success">Hapus</a>
-                              <a href="{{ url_for('adminArticleEdit', id=article._id) }}" class="btn btn-primary">Edit</a>
+                              {% if article.writer == session['username'] or username.role.data == 'ADMIN' %} 
+                                <a href="{{ url_for('adminArticleDelete', id=article._id) }}" onclick="return confirm(' you want to delete?');" class="btn btn-outline-success">Hapus</a>
+                                <a href="{{ url_for('adminArticleEdit', id=article._id) }}" class="btn btn-primary">Edit</a>
+                              {% endif %}
                             </td>
                           </tr>
                         {% endfor %}

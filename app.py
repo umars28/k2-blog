@@ -69,7 +69,7 @@ ArticleForm = model_form(Articles)
 
 @app.route('/auth/login', methods =['GET', 'POST'])
 def login():
-    message = 'Please login to your account'
+    message = ''
     if "username" in session:
         return redirect(url_for("adminDashboard"))
 
@@ -123,7 +123,6 @@ def register():
             session["username"] = username
             return redirect(url_for('adminDashboard'))
    
-            return render_template('logged_in.html', email=new_email)
     return render_template('Auth/register.html')
 
 @app.route("/logout", methods=["POST", "GET"])
@@ -137,11 +136,16 @@ def logout():
 
 @app.route('/')
 def homepage():
-    return render_template('FE/index.html')
-
-@app.route('/detail')
-def detail():
     data = Articles.objects(id='6255b21cc839d7184a0ad22b').first()
+    form = ArticleForm(obj = data)
+
+    articles_most_read = dbs.articles.find()
+
+    return render_template('FE/index.html', form=form, articles=articles_most_read)
+
+@app.route('/detail/<title>')
+def detail(title):
+    data = Articles.objects(title=title).first()
     
     form = ArticleForm(obj = data)
     return render_template('FE/detail.html', form=form)
@@ -152,6 +156,8 @@ def list():
 
 @app.route('/admin/dashboard')
 def adminDashboard():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     category_count = dbs.category.count_documents({})
     user_count = dbs.users.count_documents({})
     article_count = dbs.articles.count_documents({})
@@ -161,18 +167,27 @@ def adminDashboard():
 # ADMIN CATEGORY
 @app.route('/admin/category/index')
 def adminCategoryIndex():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     categories = dbs.category.find()
+    data = Users.objects(username=session["username"]).first()
+    
+    username = UserForm(obj = data)
     #categories = Category.objects()
 #    categories = Category.objects()
-    return render_template('CMS/category/index.html', categories=categories)
+    return render_template('CMS/category/index.html', categories=categories, username=username)
 
 @app.route('/admin/category/create', methods=['GET'])
 def adminCategoryCreate():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     form = CategoryForm()
     return render_template('CMS/category/create.html', form=form)  
 
 @app.route('/admin/category/save', methods=['POST'])
 def adminCategorySave():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     form = CategoryForm()
     data = form.data
     del data['csrf_token']
@@ -182,12 +197,16 @@ def adminCategorySave():
 
 @app.route('/admin/category/delete/<id>')
 def adminCategoryDelete(id):
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     Category.objects(id=id).delete()
     flash('Berhasil dihapus!')
     return redirect(url_for('adminCategoryIndex')) 
 
 @app.route('/admin/category/edit/<id>')
 def adminCategoryEdit(id):
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     data = Category.objects(id=id).first()
     
     form = CategoryForm(obj = data)
@@ -196,6 +215,8 @@ def adminCategoryEdit(id):
 
 @app.route('/admin/category/update/<id>', methods=['POST'])
 def adminCategoryUpdate(id):
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     form = CategoryForm()
     data = form.data
     del data['csrf_token']
@@ -208,16 +229,25 @@ def adminCategoryUpdate(id):
 # ADMIN USER
 @app.route('/admin/user/index')
 def adminUserIndex():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     users = dbs.users.find()
-    return render_template('CMS/user/index.html', users=users)
+    data = Users.objects(username=session["username"]).first()
+    
+    username = UserForm(obj = data)
+    return render_template('CMS/user/index.html', users=users, username=username)
 
 @app.route('/admin/user/create', methods=['GET'])
 def adminUserCreate():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     form = UserForm()
     return render_template('CMS/user/create.html', form=form) 
 
 @app.route('/admin/user/save', methods=['POST'])
 def adminUserSave():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     hashed = bcrypt.hashpw(request.form.get('password').encode('utf-8'), bcrypt.gensalt())
     user_input = {
             'username': request.form.get('username'), 
@@ -247,12 +277,16 @@ def adminUserSave():
 
 @app.route('/admin/user/delete/<id>')
 def adminUserDelete(id):
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     Users.objects(id=id).delete()
     flash('Berhasil dihapus!')
     return redirect(url_for('adminUserIndex')) 
 
 @app.route('/admin/user/edit/<id>')
 def adminUserEdit(id):
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     data = Users.objects(id=id).first()
     
     form = UserForm(obj = data)
@@ -261,6 +295,8 @@ def adminUserEdit(id):
 
 @app.route('/admin/user/update/<username>', methods=['POST'])
 def adminUserUpdate(username):
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     hashed = bcrypt.hashpw(request.form.get('password').encode('utf-8'), bcrypt.gensalt())
     if request.form.get('password'):
         myquery = { "username": username }
@@ -305,17 +341,26 @@ def adminUserUpdate(username):
 # ADMIN ARTICLE
 @app.route('/admin/article/index')
 def adminArticleIndex():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     articles = dbs.articles.find()
-    return render_template('CMS/article/index.html', articles=articles)
+    data = Users.objects(username=session["username"]).first()
+    
+    username = UserForm(obj = data)
+    return render_template('CMS/article/index.html', articles=articles, username=username)
 
 @app.route('/admin/article/create', methods=['GET'])
 def adminArticleCreate():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     categories = dbs.category.find()
     form = ArticleForm()
     return render_template('CMS/article/create.html', form=form, categories=categories) 
 
 @app.route('/admin/article/save', methods=['POST'])
 def adminArticleSave():
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     article_input = {
             'title': request.form.get('title'), 
             'category': request.form.get('category'), 
@@ -337,12 +382,16 @@ def adminArticleSave():
 
 @app.route('/admin/article/delete/<id>')
 def adminArticleDelete(id):
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     Articles.objects(id=id).delete()
     flash('Berhasil dihapus!')
     return redirect(url_for('adminArticleIndex')) 
 
 @app.route('/admin/article/edit/<id>')
 def adminArticleEdit(id):
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     categories = dbs.category.find()
     data = Articles.objects(id=id).first()
     
@@ -351,6 +400,8 @@ def adminArticleEdit(id):
 
 @app.route('/admin/article/update/<title>', methods=['POST'])
 def adminArticleUpdate(title):
+    if session.get('username') == None:
+        return redirect(url_for('login'))
     if request.files['banner']:
         file = request.files['banner']
         path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)

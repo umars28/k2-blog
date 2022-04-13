@@ -39,7 +39,9 @@
                             <th>No</th>
                             <th>Category Name</th>
                             <th>Status</th>
+                            {% if username.role.data == 'ADMIN' %} 
                             <th>Action</th>
+                            {% endif %}
                           </tr>
                       </thead>
                       <tbody>
@@ -49,8 +51,10 @@
                             <td>{{ category.name }}</td>
                             <td>{{ category.status }}</td>
                             <td>
-                              <a href="{{ url_for('adminCategoryDelete', id=category._id) }}" onclick="return confirm(' you want to delete?');" class="btn btn-outline-success">Hapus</a>
-                              <a href="{{ url_for('adminCategoryEdit', id=category._id) }}" class="btn btn-primary">Edit</a>
+                              {% if username.role.data == 'ADMIN' %} 
+                                <a href="{{ url_for('adminCategoryDelete', id=category._id) }}" onclick="return confirm(' you want to delete?');" class="btn btn-outline-success">Hapus</a>
+                                <a href="{{ url_for('adminCategoryEdit', id=category._id) }}" class="btn btn-primary">Edit</a>
+                              {% endif %}
                             </td>
                           </tr>
                         {% endfor %}
