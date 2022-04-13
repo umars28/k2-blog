@@ -65,6 +65,7 @@ class Articles(db.Document):
     writer = db.StringField()
     published_date = db.StringField()
     status = db.StringField()
+    read_count = db.StringField()
 
 ArticleForm = model_form(Articles)
 
@@ -160,15 +161,30 @@ def homepage():
     { "$limit": 10 }
     ])
 
-    #categories = dbs.articles.find({"status": "ACTIVE"}).distinct("category")
-    
+    most_read_article = dbs.articles.aggregate([{"$sort":{"read_count":-1}}, {"$limit":5}])
 
-    return render_template('FE/index.html', form=data, datas=datas, categories=categories, tags=most_tag, pagination=pagination)
+
+    return render_template('FE/index.html', 
+        form=data, 
+        datas=datas, 
+        categories=categories, 
+        tags=most_tag, 
+        pagination=pagination, 
+        most_read=most_read_article
+        )
 
 @app.route('/detail/<title>')
 def detail(title):
     data = Articles.objects(title=title).first()
     form = ArticleForm(obj = data)
+
+    
+    myquery = { "title": title }
+    addReadCount = { "$set": { 
+                'read_count': form.read_count.data + 1
+            } 
+        }
+    article_record.update_one(myquery, addReadCount)
     
     return render_template('FE/detail.html', form=form)
 
@@ -413,7 +429,8 @@ def adminArticleSave():
             'description': request.form.get('description'),
             'writer': session["username"],
             'published_date': request.form.get('published_date'),
-            'status': request.form.get('status')
+            'status': request.form.get('status'),
+            'read_count': 0
         }
     article_record.insert_one(article_input)
     if request.files['banner']:

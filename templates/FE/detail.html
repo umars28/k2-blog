@@ -13,7 +13,7 @@
             <div class="container">
                 <div>
                     <div class="col-lg-12 mb-3">
-                        <img src="{{ url_for('static', filename='image_upload/'+form.banner.data) }}" alt="{{ form.banner.data }}" class="rounded mx-auto d-block">
+                        <img src="{{ url_for('static', filename='image_upload/'+form.banner.data) }}" alt="{{ form.banner.data }}" class="rounded mx-auto d-block" height="350">
                     </div>
                 </div>
                 <div class="row">
@@ -25,6 +25,7 @@
                                     <li class="date"><i class="fa fa-clock-o"></i>{{ form.published_date.data }}</li>
                                 </ul>
                             </div>
+                            <h4 class="tag-base tag-blue">{{ form.writer.data }}</h4>
                             <h2>{{ form.title.data }}</h2>
                             <p>{{ form.description.data }}</p>
                             

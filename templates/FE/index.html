@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="thumb after-left-top">
-                            <img src="{{ url_for('static', filename='image_upload/'+form.banner) }}" alt="{{ form.banner }}">
+                            <img src="{{ url_for('static', filename='image_upload/'+form.banner) }}" alt="{{ form.banner }}" height=450">
                         </div>
                     </div>
                     <div class="col-lg-6 align-self-center">
@@ -24,6 +24,8 @@
                                     <li><a class="tag-base tag-blue" href="#">{{ form.category }}</a></li>
                                     <li class="date"><i class="fa fa-clock-o"></i>{{ form.published_date }}</li>
                                 </ul>
+                            </br>
+                                <h4 class="tag-base tag-blue">{{ form.writer }}</h4>
                             </div>
                             <h2>{{ form.title }}</h2>
                             <p>{{ form.description | truncate(40) }}</p>
@@ -52,6 +54,7 @@
                                 <div class="post-meta-single">
                                     <p><i class="fa fa-clock-o"></i>{{ dt.published_date }}</p>
                                 </div>
+                                <h6 class="title">{{ dt.writer }}</h6>
                                 <h6 class="title"><a href="{{ url_for('detail', title=dt.title) }}">{{ dt.title }}</a></h6>
                             </div>
                         </div>
@@ -74,7 +77,7 @@
     <div class="post-area pd-top-75 pd-bottom-50" id="trending">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="section-title">
                         <h6 class="title">Category</h6>
                     </div>
@@ -86,19 +89,31 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="section-title">
                         <h6 class="title">Tag</h6>
                     </div>
                     <div class="social-area-list mb-4">
                         <ul>
                             {% for tag in tags %}
-                            <li><a href="{{ url_for('list', data=tag, type='tags') }}"><i class="fa fa-facebook social-icon"></i><span>{{ tag._id }}</span></a></li>
+                            <li><a href="{{ url_for('list', data=tag._id, type='tags') }}"><i class="fa fa-facebook social-icon"></i><span>{{ tag._id }}</span></a></li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
+                    <div class="section-title">
+                        <h6 class="title">Most Read Article</h6>
+                    </div>
+                    <div class="social-area-list mb-4">
+                        <ul>
+                            {% for most_article in most_read %}
+                            <li><a href="{{ url_for('detail', title=most_article.title) }}"><i class="fa fa-facebook social-icon"></i><span>{{ most_article.title }}</span></a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
                     <div class="section-title">
                         <h6 class="title">Month - Year</h6>
                     </div>
