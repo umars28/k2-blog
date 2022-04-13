@@ -155,12 +155,15 @@ def homepage():
     data = dbs.articles.find_one(filterdict, sort=[('_id', -1)])
 
     categories = dbs.articles.find({"status": "ACTIVE"}).distinct("category")
-    tags = dbs.articles.find({"status": "ACTIVE"}).distinct("tag")
+    most_tag = dbs.articles.aggregate([
+    { "$sortByCount": '$tag' },
+    { "$limit": 10 }
+    ])
 
     #categories = dbs.articles.find({"status": "ACTIVE"}).distinct("category")
     
 
-    return render_template('FE/index.html', form=data, datas=datas, categories=categories, tags=tags, pagination=pagination)
+    return render_template('FE/index.html', form=data, datas=datas, categories=categories, tags=most_tag, pagination=pagination)
 
 @app.route('/detail/<title>')
 def detail(title):

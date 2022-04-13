@@ -93,7 +93,7 @@
                     <div class="social-area-list mb-4">
                         <ul>
                             {% for tag in tags %}
-                            <li><a href="{{ url_for('list', data=tag, type='tags') }}"><i class="fa fa-facebook social-icon"></i><span>{{ tag }}</span></a></li>
+                            <li><a href="{{ url_for('list', data=tag, type='tags') }}"><i class="fa fa-facebook social-icon"></i><span>{{ tag._id }}</span></a></li>
                             {% endfor %}
                         </ul>
                     </div>
