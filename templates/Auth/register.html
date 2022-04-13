@@ -22,12 +22,19 @@
     <section class="section">
       <div class="container mt-5">
         <div class="row">
+          {% if message  %}
+              <div class="alert alert-secondary" role="alert">
+                  <p>{{ message }}</p>
+              </div>
+          {% endif %}
+        </div>
+        <div class="row">
           <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
             <div class="card card-primary">
               <div class="card-header"><h4>Register</h4></div>
 
               <div class="card-body">
-                <form method="POST">
+                <form method="POST" action="{{ url_for('register') }}">
                   <div class="row">
                     <div class="form-group col-6">
                       <label for="first_name">First Name</label>
@@ -40,8 +47,8 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email">
+                    <label for="email">Username</label>
+                    <input id="email" type="text" class="form-control" name="username">
                     <div class="invalid-feedback">
                     </div>
                   </div>

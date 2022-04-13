@@ -1,0 +1,91 @@
+{% extends 'CMS/template/base.html' %}
+
+{% block title %}
+    Articles
+{% endblock %}
+
+
+{% block content %}
+  <!-- Main Content -->
+  <div class="main-content">
+    <section class="section">
+      <div class="section-header">
+        <h1>Article</h1>
+      </div>
+      <div class="row">
+        <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Create Article</h4>
+              </div>
+              <div class="card-body">
+                <form action="{{ url_for('adminArticleSave') }}" method="post" enctype="multipart/form-data">
+                  {{ form.hidden_tag() }}
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" name="title" placeholder="Masukkan judul article" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tag</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" name="tag" placeholder="Masukkan tag" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category</label>
+                    <div class="col-sm-12 col-md-7">
+                      <select class="form-control selectric" name="category">
+                        {% for category in categories %}
+                            <option value="{{ category.name }}">{{ category.name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Banner</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="file" name="banner" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Description</label>
+                    <div class="col-sm-12 col-md-7">
+                        <textarea name="description" class="form-control"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Publish Date</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="date" name="published_date" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
+                    <div class="col-sm-12 col-md-7">
+                      <select class="form-control selectric" name="status">
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                    <div class="col-sm-12 col-md-7">
+                      <button class="btn btn-primary">Publish</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+  </div>
+  <!-- Main Content -->
+{% endblock %}
+
+
+
+

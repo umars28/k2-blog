@@ -14,6 +14,19 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-primary" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <a href="/admin/user/create" class="btn btn-sm btn-primary">Create</a>
@@ -22,31 +35,28 @@
                     <table class="table">
                     <thead>
                         <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                        </tr>
+                          <th>No</th>
+                          <th scope="col">Username</th>
+                          <th scope="col">Full Name</th>
+                          <th scope="col">Role</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Action</th>
+                          </tr>
                     </thead>
                     <tbody>
+                      {% for user in users %}
                         <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                          <td>{{ loop.index }}</td>
+                          <td>{{ user.username }}</td>
+                          <td>{{ user.first_name }} {{ user.last_name }}</td>
+                          <td>{{ user.role }}</td>
+                          <td>{{ user.status }}</td>
+                          <td>
+                            <a href="{{ url_for('adminUserDelete', id=user._id) }}" onclick="return confirm(' you want to delete?');" class="btn btn-outline-success">Hapus</a>
+                            <a href="{{ url_for('adminUserEdit', id=user._id) }}" class="btn btn-primary">Edit</a>
+                          </td>
                         </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        </tr>
+                      {% endfor %}
                     </tbody>
                     </table>
                 </div>

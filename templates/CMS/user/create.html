@@ -19,28 +19,49 @@
                 <h4>Create User</h4>
               </div>
               <div class="card-body">
-                <div class="form-group row mb-4">
-                  <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category Name</label>
-                  <div class="col-sm-12 col-md-7">
-                    <input type="text" class="form-control">
+                <form action="{{ url_for('adminUserSave') }}" method="post">
+                  {{ form.hidden_tag() }}
+                  <input type="hidden" name="role" value="REGULER">
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Username</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" placeholder="Masukkan username" name="username" class="form-control">
+                    </div>
                   </div>
-                </div>
-                <div class="form-group row mb-4">
-                  <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
-                  <div class="col-sm-12 col-md-7">
-                    <select class="form-control selectric">
-                      <option>Tech</option>
-                      <option>News</option>
-                      <option>Political</option>
-                    </select>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">First Name</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" placeholder="Masukkan first name" name="first_name" class="form-control">
+                    </div>
                   </div>
-                </div>
-                <div class="form-group row mb-4">
-                  <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                  <div class="col-sm-12 col-md-7">
-                    <button class="btn btn-primary">Publish</button>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Last Name</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" placeholder="Masukkan last name" name="last_name" class="form-control">
+                    </div>
                   </div>
-                </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Password</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="password" placeholder="Masukkan password" name="password" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
+                    <div class="col-sm-12 col-md-7">
+                      <select class="form-control selectric" name="status">
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                    <div class="col-sm-12 col-md-7">
+                      <button class="btn btn-primary">Publish</button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

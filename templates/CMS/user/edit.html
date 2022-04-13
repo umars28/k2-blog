@@ -1,0 +1,77 @@
+{% extends 'CMS/template/base.html' %}
+
+{% block title %}
+    User
+{% endblock %}
+
+
+{% block content %}
+  <!-- Main Content -->
+  <div class="main-content">
+    <section class="section">
+      <div class="section-header">
+        <h1>User</h1>
+      </div>
+      <div class="row">
+        <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Edit User</h4>
+              </div>
+              <div class="card-body">
+                <form action="{{ url_for('adminUserUpdate', username=form.username.data) }}" method="post">
+                  {{ form.hidden_tag() }}
+                  <input type="hidden" name="role" value="REGULER">
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Username</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" placeholder="Masukkan username" name="username" class="form-control" value="{{ form.username.data }}">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">First Name</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" placeholder="Masukkan first name" name="first_name" class="form-control" value="{{ form.first_name.data }}">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Last Name</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" placeholder="Masukkan last name" name="last_name" class="form-control" value="{{ form.last_name.data }}">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Password</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="password" placeholder="Masukkan password" name="password" class="form-control">
+                      <p>Isi jika ingin mengganti password !</p>
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
+                    <div class="col-sm-12 col-md-7">
+                        <select class="form-control selectric" name="status">
+                          <option value="ACTIVE" {% if form.status.data == "ACTIVE" %} selected {% endif %}>ACTIVE</option>
+                          <option value="INACTIVE" {% if form.status.data == "INACTIVE" %} selected {% endif %}>INACTIVE</option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                    <div class="col-sm-12 col-md-7">
+                      <button class="btn btn-primary">Publish</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+  </div>
+  <!-- Main Content -->
+{% endblock %}
+
+
+
+

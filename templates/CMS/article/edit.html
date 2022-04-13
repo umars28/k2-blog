@@ -1,0 +1,94 @@
+{% extends 'CMS/template/base.html' %}
+
+{% block title %}
+    Articles
+{% endblock %}
+
+
+{% block content %}
+  <!-- Main Content -->
+  <div class="main-content">
+    <section class="section">
+      <div class="section-header">
+        <h1>Article</h1>
+      </div>
+      <div class="row">
+        <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Edit Article</h4>
+              </div>
+              <div class="card-body">
+                <form action="{{ url_for('adminArticleUpdate', title=form.title.data) }}" method="post" enctype="multipart/form-data">
+                  {{ form.hidden_tag() }}
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" name="title" value="{{ form.title.data }}" placeholder="Masukkan judul article" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tag</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="text" name="tag" value="{{ form.tag.data }}" placeholder="Masukkan tag" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category</label>
+                    <div class="col-sm-12 col-md-7">
+                      <select class="form-control selectric" name="category">
+                        {% for category in categories %}
+                            <option value="{{ category.name }}" {% if category.name == form.category.data %} selected {% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Banner</label>
+                    <div class="col-sm-12 col-md-7">
+                        {% if form.banner.data %}
+                            <img src="{{ url_for('static', filename='image_upload/'+form.banner.data) }}" alt="{{ form.banner.data }}" width="90" height="90">
+                        {% endif %}
+                      <input type="file" name="banner" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Description</label>
+                    <div class="col-sm-12 col-md-7">
+                        <textarea name="description" class="form-control">{{ form.description.data }}</textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Publish Date</label>
+                    <div class="col-sm-12 col-md-7">
+                      <input type="date" name="published_date" value="{{ form.published_date.data }}" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
+                    <div class="col-sm-12 col-md-7">
+                      <select class="form-control selectric" name="status">
+                        <option value="ACTIVE" {% if form.status.data == "ACTIVE" %} selected {% endif %}>ACTIVE</option>
+                        <option value="INACTIVE" {% if form.status.data == "INACTIVE" %} selected {% endif %}>INACTIVE</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row mb-4">
+                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                    <div class="col-sm-12 col-md-7">
+                      <button class="btn btn-primary">Publish</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+  </div>
+  <!-- Main Content -->
+{% endblock %}
+
+
+
+
