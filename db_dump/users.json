@@ -1,0 +1,31 @@
+[{
+  "_id": {
+    "$oid": "6252c835a1b738e207b14966"
+  },
+  "username": "umar_s28",
+  "first_name": "Umar",
+  "last_name": "Sabirin",
+  "role": "ADMIN",
+  "status": "ACTIVE",
+  "password": {
+    "$binary": {
+      "base64": "JDJiJDEyJC9lbWVtQTkyVjk4N2guOEE5ZnI5ak8zYm1Idk9hV3RJaUs2U1pWSGpZUnRRZ1MyU2pBaXEy",
+      "subType": "00"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6258687698d1a27ec04b405f"
+  },
+  "username": "ahmad",
+  "first_name": "Ahmad",
+  "last_name": "Amar",
+  "role": "REGULER",
+  "status": "ACTIVE",
+  "password": {
+    "$binary": {
+      "base64": "JDJiJDEyJE5UME80R25GZjN5LzdKYkVrNC5LdS5WRkJhbXJWU1FObkZ0RTlNamN3UWV2V3B2ZkdEdVJ1",
+      "subType": "00"
+    }
+  }
+}]

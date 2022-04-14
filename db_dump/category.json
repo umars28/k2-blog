@@ -1,0 +1,31 @@
+[{
+  "_id": {
+    "$oid": "6258689198d1a27ec04b4060"
+  },
+  "name": "Olahraga",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6258689698d1a27ec04b4061"
+  },
+  "name": "Politik",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "6258689e98d1a27ec04b4062"
+  },
+  "name": "Ilmu Pengetahuan",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "625868bb98d1a27ec04b4063"
+  },
+  "name": "Pemrograman",
+  "status": "ACTIVE"
+},{
+  "_id": {
+    "$oid": "625868c498d1a27ec04b4064"
+  },
+  "name": "Kesehatan",
+  "status": "ACTIVE"
+}]
